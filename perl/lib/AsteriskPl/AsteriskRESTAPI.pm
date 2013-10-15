@@ -26,7 +26,7 @@ sub new {
 	my ($class, %self) = @_;
 	die ("Can't call Asterisk REST API without api_url.")
 		if !$self{'api_url'};
-	if ($self{'api_url'} !~ /https*:\/\/.+\/stasis\/*/i) {
+	if ($self{'api_url'} !~ /https*:\/\/.+\/ari\/*/i) {
 		die sprintf("api_url value is invalid: %s\n", $self{'api_url'});
 	}
 	$self{'ua'} = LWP::UserAgent->new();
