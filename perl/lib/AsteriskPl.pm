@@ -28,8 +28,8 @@ use AsteriskPl::Endpoint;
 use AsteriskPl::Recording;
 
 sub new {
-	# Initiate new AsteriskPy instance.
-	# Takes optional string host, string port, boolean https.
+	# Initiate new AsteriskPl instance.
+	# Takes optional string api_url (e.g. https://user:password@server:port/ari)
 	# Raise requests.exceptions
 
 	my ($class, %self) = @_;
