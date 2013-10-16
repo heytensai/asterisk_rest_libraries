@@ -60,12 +60,14 @@ sub get_bridges {
 	my $self = shift;
 
 	my $params = {};
-	my $is_success = $self->{'api'}->call({
+	my $result = $self->{'api'}->call({
 		'path' => '/bridges',
 		'http_method' => 'GET'
 	});
-	$is_success = 1;
-	return $is_success;
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return $result->{'response'};
 }
 
 sub new_bridge {

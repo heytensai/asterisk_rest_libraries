@@ -74,40 +74,40 @@ sub get_channels {
 	my $self = shift;
 	# Return a list of all Channels from Asterisk.
 	my $response = $self->{'api'}->call({
-		'path' => '/api/channels',
+		'path' => '/channels',
 		'http_method' => 'GET'
 	});
-	# Temporary until method is implemented
-	my $result_list = [
-		AsteriskPl::Channel->new('api' => $self->{'api'}),
-		AsteriskPl::Channel->new('api' => $self->{'api'}),
-	];
-	#$result_list = [];
-	#foreach my $x (@{$response->{'channels'}}) {
-	#	$x->{'api'} = $self->{'api'};
-	#	push @$result_list = AsteriskPl::Channel->new('api' => $self->{'api'}),
-	#}
-	return $result_list;
+
+	if (!defined $response || !defined $response->{success} || $response->{success} eq 0){
+		return [];
+	}
+
+	my @result_list;
+	foreach my $x (@{$response->{'response'}}) {
+		my $chan = AsteriskPl::Channel->new('api' => $self->{'api'}, %{$x});
+		push @result_list, $chan;
+	}
+	return \@result_list;
 }
 
 sub get_bridges {
 	my $self = shift;
 	# Return a list of all Bridges from Asterisk.
 	my $response = $self->{'api'}->call({
-		'path' => '/api/bridges',
+		'path' => '/bridges',
 		'http_method' => 'GET'
 	});
-	# Temporary until method is implemented
-	my $result_list = [
-		AsteriskPl::Bridge->new('api' => $self->{'api'}),
-		AsteriskPl::Bridge->new('api' => $self->{'api'}),
-	];
-	#$result_list = [];
-	#foreach my $x (@{$response->{'bridges'}}) {
-	#	$x->{'api'} = $self->{'api'};
-	#	push @$result_list = AsteriskPl::Bridge->new('api' => $self->{'api'}),
-	#}
-	return $result_list;
+
+	if (!defined $response || !defined $response->{success} || $response->{success} eq 0){
+		return [];
+	}
+
+	my @result_list;
+	foreach my $x (@{$response->{'response'}}) {
+		my $chan = AsteriskPl::Bridge->new('api' => $self->{'api'}, %{$x});
+		push @result_list, $chan;
+	}
+	return \@result_list;
 }
 
 sub get_recordings {
