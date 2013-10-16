@@ -91,7 +91,7 @@ sub call {
 		return $result;
 	}
 
-	if ($response->code m/^4/ or $response->code =~ m/^3/ or $response->code =~ m/^5/) {
+	if ($response->code =~ m/^4/ or $response->code =~ m/^3/ or $response->code =~ m/^5/) {
 		print "Server error.\n";
 		$result->{'error'} = $response->status_line;
 		$result->{'success'} = 0;
