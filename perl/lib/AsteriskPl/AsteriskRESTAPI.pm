@@ -91,8 +91,8 @@ sub call {
 		return $result;
 	}
 
-	if (!($response->code eq '418' or $response->code eq '302')) {
-		print "Can't contact server.\n";
+	if ($response->code m/^4/ or $response->code =~ m/^3/ or $response->code =~ m/^5/) {
+		print "Server error.\n";
 		$result->{'error'} = $response->status_line;
 		$result->{'success'} = 0;
 		return $result;
