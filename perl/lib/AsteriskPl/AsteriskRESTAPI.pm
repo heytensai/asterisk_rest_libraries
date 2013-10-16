@@ -20,6 +20,8 @@ use LWP::UserAgent;
 use JSON;
 
 package AsteriskPl::AsteriskRESTAPI;
+use strict;
+use warnings;
 
 sub new {
 	# Handle HTTP requests to Asterisk
@@ -55,8 +57,8 @@ sub call {
 	my $params = shift;
 	my $result = {
 		'success' => 0,
-		'response' => NULL,
-		'error' => NULL,
+		'response' => undef,
+		'error' => undef,
 	};
 
 	die ("Can't call Asterisk REST API without HTTP method.")

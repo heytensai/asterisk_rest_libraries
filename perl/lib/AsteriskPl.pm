@@ -17,6 +17,8 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 package AsteriskPl;
+use strict;
+use warnings;
 
 use LWP::Simple;
 use JSON;
@@ -56,7 +58,7 @@ sub get_endpoints {
 		'http_method' => 'GET'
 	});
 	# Temporary until method is implemented
-	$result_list = [
+	my $result_list = [
 		AsteriskPl::Endpoint->new('api' => $self->{'api'}),
 		AsteriskPl::Endpoint->new('api' => $self->{'api'}),
 	];
@@ -76,7 +78,7 @@ sub get_channels {
 		'http_method' => 'GET'
 	});
 	# Temporary until method is implemented
-	$result_list = [
+	my $result_list = [
 		AsteriskPl::Channel->new('api' => $self->{'api'}),
 		AsteriskPl::Channel->new('api' => $self->{'api'}),
 	];
@@ -96,7 +98,7 @@ sub get_bridges {
 		'http_method' => 'GET'
 	});
 	# Temporary until method is implemented
-	$result_list = [
+	my $result_list = [
 		AsteriskPl::Bridge->new('api' => $self->{'api'}),
 		AsteriskPl::Bridge->new('api' => $self->{'api'}),
 	];
@@ -116,7 +118,7 @@ sub get_recordings {
 		'http_method' => 'GET'
 	});
 	# Temporary until method is implemented
-	$result_list = [
+	my $result_list = [
 		AsteriskPl::Recording->new('api' => $self->{'api'}),
 		AsteriskPl::Recording->new('api' => $self->{'api'}),
 	];
@@ -142,7 +144,7 @@ sub get_endpoint {
 	# Temporary until method is implemented
 	#$response->{'endpoint'}->{'api'} = $self->{'api'};
 	#$result = AsteriskPl::Endpoint->new($response->{'endpoint'});
-	$result = AsteriskPl::Endpoint->new('api' => $self->{'api'});
+	my $result = AsteriskPl::Endpoint->new('api' => $self->{'api'});
 	return $result;
 }
 
@@ -159,7 +161,7 @@ sub get_channel {
 	# Temporary until method is implemented
 	#$response->{'channel'}->{'api'} = $self->{'api'};
 	#$result = AsteriskPl::Channel->new($response->{'channel'});
-	$result = AsteriskPl::Channel->new('api' => $self->{'api'});
+	my $result = AsteriskPl::Channel->new('api' => $self->{'api'});
 	return $result;
 }
 
@@ -176,7 +178,7 @@ sub get_bridge {
 	# Temporary until method is implemented
 	#$response->{'bridge'}->{'api'} = $self->{'api'};
 	#$result = AsteriskPl::Bridge->new($response->{'bridge'});
-	$result = AsteriskPl::Bridge->new('api' => $self->{'api'});
+	my $result = AsteriskPl::Bridge->new('api' => $self->{'api'});
 	return $result;
 }
 
@@ -193,7 +195,7 @@ sub get_recording {
 	# Temporary until method is implemented
 	#$response->{'recording'}->{'api'} = $self->{'api'};
 	#$result = AsteriskPl::Recording->new($response->{'recording'});
-	$result = AsteriskPl::Recording->new('api' => $self->{'api'});
+	my $result = AsteriskPl::Recording->new('api' => $self->{'api'});
 	return $result;
 }
 

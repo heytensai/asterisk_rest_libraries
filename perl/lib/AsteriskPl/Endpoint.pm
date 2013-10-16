@@ -18,6 +18,8 @@
 
 
 package AsteriskPl::Endpoint;
+use strict;
+use warnings;
 
 sub new {
 	# Definition of Endpoint object
@@ -57,8 +59,8 @@ sub get_endpoints {
 	# Asterisk endpoints; List available endoints
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/endpoints',
 		'http_method' => 'GET'
 	});
@@ -70,8 +72,8 @@ sub get_endpoint {
 	# Single endpoint; Details for an endpoint
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/endpoints/%s',
 		'http_method' => 'GET',
 		'object_id' => $self->{'object_id'}

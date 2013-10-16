@@ -57,8 +57,8 @@ sub get_recordings {
 	# Recordings; List recordings
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/recordings',
 		'http_method' => 'GET'
 	});
@@ -70,8 +70,8 @@ sub get_recording {
 	# Individual recording; Get recording details
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/recordings/%s',
 		'http_method' => 'GET',
 		'object_id' => $self->{'object_id'}
@@ -84,8 +84,8 @@ sub delete_recording {
 	# Individual recording; Delete recording
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/recordings/%s',
 		'http_method' => 'DELETE',
 		'parameters' => $params,
@@ -99,8 +99,8 @@ sub stop_recording {
 	# Stop recording
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/recordings/%s/stop',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -114,8 +114,8 @@ sub pause_recording {
 	# Pause recording
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/recordings/%s/pause',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -129,8 +129,8 @@ sub unpause_recording {
 	# Unpause recording
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/recordings/%s/unpause',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -144,8 +144,8 @@ sub mute_recording {
 	# Mute recording
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/recordings/%s/mute',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -159,8 +159,8 @@ sub unmute_recording {
 	# Unmute recording
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/recordings/%s/unmute',
 		'http_method' => 'POST',
 		'parameters' => $params,

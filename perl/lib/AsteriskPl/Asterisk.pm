@@ -18,6 +18,8 @@
 
 
 package AsteriskPl::Asterisk;
+use strict;
+use warnings;
 
 sub new {
 	# Definition of Asterisk object

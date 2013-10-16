@@ -18,6 +18,8 @@
 
 
 package AsteriskPl::Bridge;
+use strict;
+use warnings;
 
 sub new {
 	# Definition of Bridge object
@@ -57,8 +59,8 @@ sub get_bridges {
 	# Active bridges; List active bridges
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/bridges',
 		'http_method' => 'GET'
 	});
@@ -70,8 +72,8 @@ sub new_bridge {
 	# Active bridges; Create a new bridge
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/bridges',
 		'http_method' => 'POST',
 		'parameters' => $params
@@ -84,8 +86,8 @@ sub get_bridge {
 	# Individual bridge; Get bridge details
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/bridges/%s',
 		'http_method' => 'GET',
 		'object_id' => $self->{'object_id'}
@@ -98,8 +100,8 @@ sub delete_bridge {
 	# Individual bridge; Delete bridge
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/bridges/%s',
 		'http_method' => 'DELETE',
 		'parameters' => $params,
@@ -113,8 +115,8 @@ sub add_channel_to_bridge {
 	# Add a channel to a bridge
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/bridges/%s/addChannel',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -128,8 +130,8 @@ sub remove_channel_from_bridge {
 	# Remove a channel from a bridge
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/bridges/%s/removeChannel',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -143,8 +145,8 @@ sub record_bridge {
 	# Record audio to/from a bridge; Start a recording
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/bridges/%s/record',
 		'http_method' => 'POST',
 		'parameters' => $params,

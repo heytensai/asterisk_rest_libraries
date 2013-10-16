@@ -18,6 +18,8 @@
 
 
 package AsteriskPl::Channel;
+use strict;
+use warnings;
 
 sub new {
 	# Definition of Channel object
@@ -57,8 +59,8 @@ sub get_channels {
 	# Active channels; List active channels
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/channels',
 		'http_method' => 'GET'
 	});
@@ -70,8 +72,8 @@ sub originate {
 	# Active channels; Create a new channel (originate)
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/channels',
 		'http_method' => 'POST',
 		'parameters' => $params
@@ -84,8 +86,8 @@ sub get_channel {
 	# Active channel; Channel details
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/channels/%s',
 		'http_method' => 'GET',
 		'object_id' => $self->{'object_id'}
@@ -98,8 +100,8 @@ sub delete_channel {
 	# Active channel; Delete (i.e. hangup) a channel
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/channels/%s',
 		'http_method' => 'DELETE',
 		'parameters' => $params,
@@ -113,8 +115,8 @@ sub dial {
 	# Create a new channel (originate) and bridge to this channel
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/channels/%s/dial',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -128,8 +130,8 @@ sub continue_in_dialplan {
 	# Exit application; continue execution in the dialplan
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/channels/%s/continue',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -143,8 +145,8 @@ sub reject_channel {
 	# Reject a channel
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/channels/%s/reject',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -158,8 +160,8 @@ sub answer_channel {
 	# Answer a channel
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/channels/%s/answer',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -173,8 +175,8 @@ sub mute_channel {
 	# Mute a channel
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/channels/%s/mute',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -188,8 +190,8 @@ sub unmute_channel {
 	# Unmute a channel
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/channels/%s/unmute',
 		'http_method' => 'POST',
 		'parameters' => $params,
@@ -203,8 +205,8 @@ sub record_channel {
 	# Record audio to/from a channel; Start a recording
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $is_success = $self->{'api'}->call({
 		'path' => '/channels/%s/record',
 		'http_method' => 'POST',
 		'parameters' => $params,
