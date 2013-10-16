@@ -58,12 +58,15 @@ sub get_asterisk_info {
 	# Asterisk system information
 	my $self = shift;
 
-	$params = {};
-	$is_success = $self->{'api'}->call({
+	my $params = {};
+	my $result = $self->{'api'}->call({
 		'path' => '/asterisk/info',
 		'http_method' => 'GET'
 	});
-	$is_success = 1;
-	return $is_success;
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+
+	return $result->{'response'};
 }
 1;
