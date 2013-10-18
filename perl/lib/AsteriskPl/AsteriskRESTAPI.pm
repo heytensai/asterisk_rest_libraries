@@ -78,7 +78,15 @@ sub call {
 		$uri = sprintf("$uri%s", make_param_string($params->{'parameters'}));
 		$response = $self->{'ua'}->get($uri);
 	} elsif ($params->{'http_method'} eq 'POST') {
-		$response = $self->{'ua'}->post($uri, $params->{'parameters'});
+		# workaround for https://issues.asterisk.org/jira/browse/ASTERISK-22685
+		if (1){
+			my $paramString = make_param_string($params->{'parameters'});
+			$uri = sprintf("$uri%s", make_param_string($params->{'parameters'}));
+			$response = $self->{'ua'}->post($uri);
+		}
+		else{
+			$response = $self->{'ua'}->post($uri, $params->{'parameters'});
+		}
 	} elsif ($params->{'http_method'} eq 'DELETE') {
 		my $paramString = make_param_string($params->{'parameters'});
 		$uri = sprintf("$uri%s", make_param_string($params->{'parameters'}));
