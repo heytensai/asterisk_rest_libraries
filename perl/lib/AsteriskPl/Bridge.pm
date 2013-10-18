@@ -134,16 +134,33 @@ sub delete_bridge {
 sub add_channel_to_bridge {
 	# Add a channel to a bridge
 	my $self = shift;
+	my $channels = shift;
+	my $role = shift;
 
-	my $params = {};
-	my $is_success = $self->{'api'}->call({
+	my @ch;
+	foreach my $ch (@{$channels}){
+		my $id;
+		if (ref $ch){
+			$id = $ch->{'id'};
+		}
+		else{
+			$id = $ch;
+		}
+		push @ch, $id,
+	}
+	my $params = {
+		'channel' => \@ch,
+		#'role' => $role,
+	};
+
+	my $result = $self->{'api'}->call({
 		'path' => '/bridges/%s/addChannel',
 		'http_method' => 'POST',
 		'parameters' => $params,
-		'object_id' => $self->{'object_id'}
+		'object_id' => $self->{'id'}
 	});
-	$is_success = 1;
-	return $is_success;
+	print Data::Dumper::Dumper($result);
+	return $result;
 }
 
 sub remove_channel_from_bridge {
