@@ -113,15 +113,16 @@ sub delete_channel {
 	# Active channel; Delete (i.e. hangup) a channel
 	my $self = shift;
 
-	my $params = {};
-	my $is_success = $self->{'api'}->call({
+	my $result = $self->{'api'}->call({
 		'path' => '/channels/%s',
 		'http_method' => 'DELETE',
-		'parameters' => $params,
-		'object_id' => $self->{'object_id'}
+		'object_id' => $self->{'id'}
 	});
-	$is_success = 1;
-	return $is_success;
+	print Data::Dumper::Dumper($result);
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
 }
 
 sub dial {
