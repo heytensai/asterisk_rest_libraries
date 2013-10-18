@@ -169,16 +169,9 @@ sub get_bridge {
 	# Return Bridge specified by object_id.
 	my $self = shift;
 	my $object_id = shift;
-	my $response = $self->{'api'}->call({
-		'path' => '/bridges',
-		'http_method' => 'GET',
-		'object_id' => $object_id,
-	});
 
-	# Temporary until method is implemented
-	#$response->{'bridge'}->{'api'} = $self->{'api'};
-	#$result = AsteriskPl::Bridge->new($response->{'bridge'});
 	my $result = AsteriskPl::Bridge->new('api' => $self->{'api'});
+	$result->get_bridge($object_id);
 	return $result;
 }
 

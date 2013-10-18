@@ -96,15 +96,24 @@ sub new_bridge {
 sub get_bridge {
 	# Individual bridge; Get bridge details
 	my $self = shift;
+	my $id = shift;
 
-	my $params = {};
-	my $is_success = $self->{'api'}->call({
+	my $result = $self->{'api'}->call({
 		'path' => '/bridges/%s',
 		'http_method' => 'GET',
-		'object_id' => $self->{'object_id'}
+		'object_id' => $id
 	});
-	$is_success = 1;
-	return $is_success;
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	my $resp = $result->{response};
+
+	$self->{id} = $resp->{id};
+	$self->{bridge_type} = $resp->{bridge_type};
+	$self->{bridge_class} = $resp->{bridge_class};
+	$self->{technology} = $resp->{technology};
+
+	return $self;
 }
 
 sub delete_bridge {
