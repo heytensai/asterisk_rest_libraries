@@ -118,7 +118,6 @@ sub delete_channel {
 		'http_method' => 'DELETE',
 		'object_id' => $self->{'id'}
 	});
-	print Data::Dumper::Dumper($result);
 	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
 		return 0;
 	}
