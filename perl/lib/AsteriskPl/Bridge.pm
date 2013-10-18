@@ -120,15 +120,15 @@ sub delete_bridge {
 	# Individual bridge; Delete bridge
 	my $self = shift;
 
-	my $params = {};
-	my $is_success = $self->{'api'}->call({
+	my $result = $self->{'api'}->call({
 		'path' => '/bridges/%s',
 		'http_method' => 'DELETE',
-		'parameters' => $params,
-		'object_id' => $self->{'object_id'}
+		'object_id' => $self->{'id'}
 	});
-	$is_success = 1;
-	return $is_success;
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
 }
 
 sub add_channel_to_bridge {
