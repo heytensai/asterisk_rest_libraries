@@ -100,6 +100,8 @@ sub call {
 		return $result;
 	}
 
+	$result->{'success'} = 1;
+
 	if ($response->content) {
 		if (eval { JSON::XS::decode_json($response->content); 1; } ) {
 			$result->{'response'} = JSON::XS::decode_json($response->content);
