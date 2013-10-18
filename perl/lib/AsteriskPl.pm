@@ -217,13 +217,8 @@ sub create_bridge() {
 	#In Asterisk, bridge two or more channels. Return the Bridge.
 	my $self = shift;
 	my $params = shift;
-	my $result = $self->{'api'}->call({
-		'path' => '/api/bridges',
-		'http_method' => 'POST',
-		'parameters' => $params,
-	});
-	# Temporary until method is implemented
-	$result = AsteriskPl::Bridge->new('api' => $self->{'api'});
+	my $result = AsteriskPl::Bridge->new('api' => $self->{'api'});
+	$result->new_bridge($params->{'type'});
 	return $result
 }
 

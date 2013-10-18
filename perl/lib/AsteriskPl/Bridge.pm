@@ -73,15 +73,24 @@ sub get_bridges {
 sub new_bridge {
 	# Active bridges; Create a new bridge
 	my $self = shift;
+	my $type = shift;
 
-	my $params = {};
-	my $is_success = $self->{'api'}->call({
+	my $params = { 'type' => $type };
+	my $result = $self->{'api'}->call({
 		'path' => '/bridges',
 		'http_method' => 'POST',
 		'parameters' => $params
 	});
-	$is_success = 1;
-	return $is_success;
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+
+	$self->{id} = $result->{id};
+	$self->{bridge_type} = $result->{bridge_type};
+	$self->{bridge_class} = $result->{bridge_class};
+	$self->{technology} = $result->{technology};
+
+	return $self;
 }
 
 sub get_bridge {
