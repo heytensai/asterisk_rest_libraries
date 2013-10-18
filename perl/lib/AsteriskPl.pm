@@ -152,16 +152,11 @@ sub get_channel {
 	# Return Channel specified by object_id.
 	my $self = shift;
 	my $object_id = shift;
-	my $response = $self->{'api'}->call({
-		'path' => '/channels',
-		'http_method' => 'GET',
-		'object_id' => $object_id,
-	});
 
-	# Temporary until method is implemented
-	#$response->{'channel'}->{'api'} = $self->{'api'};
-	#$result = AsteriskPl::Channel->new($response->{'channel'});
 	my $result = AsteriskPl::Channel->new('api' => $self->{'api'});
+	if ($result->get_channel($object_id) eq 0){
+		return undef;
+	}
 	return $result;
 }
 

@@ -85,15 +85,28 @@ sub originate {
 sub get_channel {
 	# Active channel; Channel details
 	my $self = shift;
+	my $id = shift;
 
-	my $params = {};
-	my $is_success = $self->{'api'}->call({
+	my $result = $self->{'api'}->call({
 		'path' => '/channels/%s',
 		'http_method' => 'GET',
-		'object_id' => $self->{'object_id'}
+		'object_id' => $id,
 	});
-	$is_success = 1;
-	return $is_success;
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	my $resp = $result->{response};
+
+	$self->{id} = $resp->{id};
+	$self->{name} = $resp->{name};
+	$self->{state} = $resp->{state};
+	$self->{caller} = $resp->{caller};
+	$self->{connected} = $resp->{connected};
+	$self->{accountcode} = $resp->{accountcode};
+	$self->{creationtime} = $resp->{creationtime};
+	$self->{dialplan} = $resp->{dialplan};
+
+	return $self;
 }
 
 sub delete_channel {
