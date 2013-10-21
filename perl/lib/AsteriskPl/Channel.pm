@@ -189,40 +189,6 @@ sub get_variable {
 	return $result->{response}->{value};
 }
 
-sub mute {
-	# Active channel; mute channel in the specified direction
-	my $self = shift;
-	my $direction = shift || 'both';
-
-	my $result = $self->{'api'}->call({
-		'path' => '/channels/%s/mute',
-		'http_method' => 'POST',
-		'object_id' => $self->{'id'},
-		'parameters' => { 'direction' => $direction },
-	});
-	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
-		return 0;
-	}
-	return 1;
-}
-
-sub unmute {
-	# Active channel; mute channel in the specified direction
-	my $self = shift;
-	my $direction = shift || 'both';
-
-	my $result = $self->{'api'}->call({
-		'path' => '/channels/%s/unmute',
-		'http_method' => 'POST',
-		'object_id' => $self->{'id'},
-		'parameters' => { 'direction' => $direction },
-	});
-	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
-		return 0;
-	}
-	return 1;
-}
-
 sub dial {
 	# Create a new channel (originate) and bridge to this channel
 	my $self = shift;
@@ -271,31 +237,35 @@ sub answer_channel {
 sub mute_channel {
 	# Mute a channel
 	my $self = shift;
+	my $direction = shift || 'both';
 
-	my $params = {};
-	my $is_success = $self->{'api'}->call({
+	my $result = $self->{'api'}->call({
 		'path' => '/channels/%s/mute',
 		'http_method' => 'POST',
-		'parameters' => $params,
-		'object_id' => $self->{'object_id'}
+		'object_id' => $self->{'id'},
+		'parameters' => { 'direction' => $direction },
 	});
-	$is_success = 1;
-	return $is_success;
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
 }
 
 sub unmute_channel {
 	# Unmute a channel
 	my $self = shift;
+	my $direction = shift || 'both';
 
-	my $params = {};
-	my $is_success = $self->{'api'}->call({
+	my $result = $self->{'api'}->call({
 		'path' => '/channels/%s/unmute',
 		'http_method' => 'POST',
-		'parameters' => $params,
-		'object_id' => $self->{'object_id'}
+		'object_id' => $self->{'id'},
+		'parameters' => { 'direction' => $direction },
 	});
-	$is_success = 1;
-	return $is_success;
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
 }
 
 sub record_channel {
