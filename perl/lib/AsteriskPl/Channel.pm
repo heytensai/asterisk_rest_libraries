@@ -253,21 +253,6 @@ sub continue_in_dialplan {
 	return $is_success;
 }
 
-sub reject_channel {
-	# Reject a channel
-	my $self = shift;
-
-	my $params = {};
-	my $is_success = $self->{'api'}->call({
-		'path' => '/channels/%s/reject',
-		'http_method' => 'POST',
-		'parameters' => $params,
-		'object_id' => $self->{'object_id'}
-	});
-	$is_success = 1;
-	return $is_success;
-}
-
 sub answer_channel {
 	# Answer a channel
 	my $self = shift;
