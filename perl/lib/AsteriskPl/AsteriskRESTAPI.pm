@@ -74,8 +74,8 @@ sub call {
 	my $response;
 	print "uri is $uri\n";
 	if ($params->{'http_method'} eq 'GET') {
-		my $paramString = make_param_string($params->{'parameters'});
-		$uri = sprintf("$uri%s", make_param_string($params->{'parameters'}));
+		my $param_string = make_param_string($params->{'parameters'});
+		$uri = sprintf("$uri%s", $param_string);
 		$response = $self->{'ua'}->get($uri);
 	} elsif ($params->{'http_method'} eq 'POST') {
 		# workaround for https://issues.asterisk.org/jira/browse/ASTERISK-22685
@@ -132,10 +132,13 @@ sub make_param_string($) {
 	my $strings = [];
 	foreach my $name (keys %$params) {
 		# Skip ref HASH -- We won't know how to name these.
-		if (ref $params->{$name} eq 'ARRAY') {
-			push @$strings, join('=', $name, join(',', @{$params->{$name}}));
-		} elsif (ref $params->{$name} eq 'SCALAR') {
+		my $ref = ref $params->{$name};
+		if (!$ref){
 			push @$strings, join('=', $name, $params->{$name});
+		} elsif ($ref eq 'ARRAY') {
+			push @$strings, join('=', $name, join(',', @{$params->{$name}}));
+		} elsif ($ref eq 'SCALAR') {
+			push @$strings, join('=', $name, ${$params->{$name}});
 		}
 	}
 	if (@$strings) {
