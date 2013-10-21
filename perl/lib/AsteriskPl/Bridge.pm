@@ -137,6 +137,10 @@ sub add_channel_to_bridge {
 	my $channels = shift;
 	my $role = shift;
 
+	if (ref $channels ne 'ARRAY'){
+		return 0;
+	}
+
 	my @ch;
 	foreach my $ch (@{$channels}){
 		my $id;
