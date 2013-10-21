@@ -238,4 +238,41 @@ sub play {
 	return 1;
 }
 
+sub moh {
+	# plays moh into a bridge
+	my $self = shift;
+	my $moh_class = shift;
+
+	my %parameters;
+	if ($moh_class){
+		$parameters{'mohClass'} = $moh_class;
+	}
+
+	my $result = $self->{'api'}->call({
+		'path' => '/bridges/%s/moh',
+		'http_method' => 'POST',
+		'object_id' => $self->{'id'},
+		'parameters' => \%parameters,
+	});
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
+}
+
+sub moh_stop {
+	# stops moh previously started by Bridge::moh
+	my $self = shift;
+
+	my $result = $self->{'api'}->call({
+		'path' => '/bridges/%s/moh',
+		'http_method' => 'DELETE',
+		'object_id' => $self->{'id'},
+	});
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
+}
+
 1;
