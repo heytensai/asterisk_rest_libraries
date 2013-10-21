@@ -207,16 +207,31 @@ sub dial {
 sub continue_in_dialplan {
 	# Exit application; continue execution in the dialplan
 	my $self = shift;
+	my $priority = shift;
+	my $extension = shift;
+	my $context = shift;
 
 	my $params = {};
-	my $is_success = $self->{'api'}->call({
+	if (defined $priority){
+		$params->{'priority'} = $priority
+	}
+	if (defined $extension){
+		$params->{'extension'} = $extension
+	}
+	if (defined $context){
+		$params->{'context'} = $context
+	}
+
+	my $result = $self->{'api'}->call({
 		'path' => '/channels/%s/continue',
 		'http_method' => 'POST',
 		'parameters' => $params,
-		'object_id' => $self->{'object_id'}
+		'object_id' => $self->{'id'}
 	});
-	$is_success = 1;
-	return $is_success;
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
 }
 
 sub answer_channel {
