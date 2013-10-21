@@ -143,6 +143,52 @@ sub hold {
 	return 1;
 }
 
+sub set_variable {
+	# Active channel; set a variable to the channel
+	my $self = shift;
+	my $variable = shift;
+	my $value = shift;
+
+	if (!defined $variable || !$variable){
+		return 0;
+	}
+	if (!defined $value){
+		return 0;
+	}
+
+	my $result = $self->{'api'}->call({
+		'path' => '/channels/%s/variable',
+		'http_method' => 'POST',
+		'object_id' => $self->{'id'},
+		'parameters' => { 'variable' => $variable, 'value' => $value},
+	});
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
+}
+
+sub get_variable {
+	# Active channel; get a variable from the channel
+	my $self = shift;
+	my $variable = shift;
+
+	if (!defined $variable || !$variable){
+		return 0;
+	}
+
+	my $result = $self->{'api'}->call({
+		'path' => '/channels/%s/variable',
+		'http_method' => 'GET',
+		'object_id' => $self->{'id'},
+		'parameters' => { 'variable' => $variable},
+	});
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return undef;
+	}
+	return $result->{response}->{value};
+}
+
 sub dial {
 	# Create a new channel (originate) and bridge to this channel
 	my $self = shift;
