@@ -159,7 +159,6 @@ sub add_channel_to_bridge {
 		'parameters' => $params,
 		'object_id' => $self->{'id'}
 	});
-	print Data::Dumper::Dumper($result);
 	return $result;
 }
 
