@@ -165,16 +165,37 @@ sub add_channel_to_bridge {
 sub remove_channel_from_bridge {
 	# Remove a channel from a bridge
 	my $self = shift;
+	my $channels = shift;
 
-	my $params = {};
-	my $is_success = $self->{'api'}->call({
+	if (ref $channels ne 'ARRAY'){
+		return 0;
+	}
+
+	my @ch;
+	foreach my $ch (@{$channels}){
+		my $id;
+		if (ref $ch){
+			$id = $ch->{'id'};
+		}
+		else{
+			$id = $ch;
+		}
+		push @ch, $id,
+	}
+	my $params = {
+		'channel' => \@ch,
+	};
+
+	my $result = $self->{'api'}->call({
 		'path' => '/bridges/%s/removeChannel',
 		'http_method' => 'POST',
 		'parameters' => $params,
-		'object_id' => $self->{'object_id'}
+		'object_id' => $self->{'id'}
 	});
-	$is_success = 1;
-	return $is_success;
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
 }
 
 sub record_bridge {
