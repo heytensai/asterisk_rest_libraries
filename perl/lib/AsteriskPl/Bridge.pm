@@ -192,4 +192,26 @@ sub record_bridge {
 	$is_success = 1;
 	return $is_success;
 }
+
+sub play {
+	# Play audio to a bridge
+	my $self = shift;
+	my $playback = shift;
+
+	if (!$playback || !defined !$playback->{id}){
+		return 0;
+	}
+
+	my $result = $self->{'api'}->call({
+		'path' => '/bridges/%s/play',
+		'http_method' => 'POST',
+		'object_id' => $self->{'id'},
+		'parameters' => { 'playbackId' => $playback->{id} },
+	});
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
+}
+
 1;
