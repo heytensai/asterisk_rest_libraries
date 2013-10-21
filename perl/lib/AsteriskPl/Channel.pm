@@ -189,6 +189,40 @@ sub get_variable {
 	return $result->{response}->{value};
 }
 
+sub mute {
+	# Active channel; mute channel in the specified direction
+	my $self = shift;
+	my $direction = shift || 'both';
+
+	my $result = $self->{'api'}->call({
+		'path' => '/channels/%s/mute',
+		'http_method' => 'POST',
+		'object_id' => $self->{'id'},
+		'parameters' => { 'direction' => $direction },
+	});
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
+}
+
+sub unmute {
+	# Active channel; mute channel in the specified direction
+	my $self = shift;
+	my $direction = shift || 'both';
+
+	my $result = $self->{'api'}->call({
+		'path' => '/channels/%s/unmute',
+		'http_method' => 'POST',
+		'object_id' => $self->{'id'},
+		'parameters' => { 'direction' => $direction },
+	});
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
+}
+
 sub dial {
 	# Create a new channel (originate) and bridge to this channel
 	my $self = shift;
