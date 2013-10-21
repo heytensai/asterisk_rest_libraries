@@ -124,6 +124,25 @@ sub delete_channel {
 	return 1;
 }
 
+sub hold {
+	# Active channel; put a channel on hold
+	my $self = shift;
+	my $on = shift;
+	if (!defined $on){
+		$on = 1;
+	}
+
+	my $result = $self->{'api'}->call({
+		'path' => '/channels/%s/hold',
+		'http_method' => $on ? 'POST' : 'DELETE',
+		'object_id' => $self->{'id'}
+	});
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
+}
+
 sub dial {
 	# Create a new channel (originate) and bridge to this channel
 	my $self = shift;
