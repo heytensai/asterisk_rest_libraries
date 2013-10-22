@@ -126,6 +126,44 @@ sub get_bridges {
 	return \@result_list;
 }
 
+sub get_sound {
+	my $self = shift;
+	my $id = shift;
+	# Return a specific Sound from Asterisk.
+	my $response = $self->{'api'}->call({
+		'path' => '/sounds/%s',
+		'http_method' => 'GET',
+		'object_id' => $id,
+	});
+
+	if (!defined $response || !defined $response->{success} || $response->{success} eq 0){
+		return undef;
+	}
+
+	my $sound = AsteriskPl::Sound->new('api' => $self->{'api'}, %{$response->{response}});
+	return $sound;
+}
+
+sub get_sounds {
+	my $self = shift;
+	# Return a list of all Sound from Asterisk.
+	my $response = $self->{'api'}->call({
+		'path' => '/sounds',
+		'http_method' => 'GET'
+	});
+
+	if (!defined $response || !defined $response->{success} || $response->{success} eq 0){
+		return [];
+	}
+
+	my @result_list;
+	foreach my $x (@{$response->{'response'}}) {
+		my $sound = AsteriskPl::Sound->new('api' => $self->{'api'}, %{$x});
+		push @result_list, $sound;
+	}
+	return \@result_list;
+}
+
 sub get_recordings {
 	my $self = shift;
 	# Return a list of all Recordings from Asterisk.
