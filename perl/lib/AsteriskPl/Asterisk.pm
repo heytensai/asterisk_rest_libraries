@@ -71,4 +71,49 @@ sub get_asterisk_info {
 
 	return $result->{'response'};
 }
+
+sub set_variable {
+	# set a global variable
+	my $self = shift;
+	my $variable = shift;
+	my $value = shift;
+
+	if (!defined $variable || !$variable){
+		return 0;
+	}
+	if (!defined $value){
+		return 0;
+	}
+
+	my $result = $self->{'api'}->call({
+		'path' => '/asterisk/variable',
+		'http_method' => 'POST',
+		'parameters' => { 'variable' => $variable, 'value' => $value },
+	});
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	return 1;
+}
+
+sub get_variable {
+	# get a global variable
+	my $self = shift;
+	my $variable = shift;
+
+	if (!defined $variable || !$variable){
+		return 0;
+	}
+
+	my $result = $self->{'api'}->call({
+		'path' => '/asterisk/variable',
+		'http_method' => 'GET',
+		'parameters' => { 'variable' => $variable },
+	});
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return undef;
+	}
+	return $result->{response}->{value};
+}
+
 1;

@@ -50,6 +50,11 @@ sub get_asterisk_info {
 	return $self->{'asterisk'}->get_asterisk_info();
 }
 
+sub asterisk {
+	my $self = shift;
+	return $self->{'asterisk'};
+}
+
 sub get_endpoints {
 	# Return a list of all Endpoints from Asterisk.
 	my $self = shift;
