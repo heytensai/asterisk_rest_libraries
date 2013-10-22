@@ -68,7 +68,14 @@ sub call {
 
 
 	if ($params->{'object_id'}) {
-		$params->{'path'} =~ s/\%s/$params->{'object_id'}/ig;
+		if (ref $params->{'object_id'} eq 'ARRAY'){
+			foreach my $p (@{$params->{'object_id'}}){
+				$params->{'path'} =~ s/\%s/$p/i;
+			}
+		}
+		else{
+			$params->{'path'} =~ s/\%s/$params->{'object_id'}/ig;
+		}
 	}
 	my $uri = $self->{'api_url'} . $params->{'path'};
 	my $response;
