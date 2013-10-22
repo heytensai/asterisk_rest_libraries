@@ -71,14 +71,26 @@ sub get_endpoints {
 sub get_endpoint {
 	# Single endpoint; Details for an endpoint
 	my $self = shift;
+	my $tech = shift;
+	my $resource = shift;
 
-	my $params = {};
-	my $is_success = $self->{'api'}->call({
-		'path' => '/endpoints/%s',
+	my $ids = [$tech, $resource];
+
+	my $result = $self->{'api'}->call({
+		'path' => '/endpoints/%s/%s',
 		'http_method' => 'GET',
-		'object_id' => $self->{'object_id'}
+		'object_id' => $ids,
 	});
-	$is_success = 1;
-	return $is_success;
+	if (!defined $result || !defined $result->{'success'} || $result->{success} eq 0){
+		return 0;
+	}
+	my $resp = $result->{'response'};
+
+	$self->{'resource'} = $resp->{'resource'};
+	$self->{'technology'} = $resp->{'technology'};
+	$self->{'state'} = $resp->{'state'};
+	# TODO: channels
+
+	return $self;
 }
 1;

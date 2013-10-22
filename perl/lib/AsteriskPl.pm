@@ -51,23 +51,34 @@ sub get_asterisk_info {
 }
 
 sub get_endpoints {
-	my $self = shift;
 	# Return a list of all Endpoints from Asterisk.
+	my $self = shift;
+	my $tech = shift;
+
+	my $path;
+	if (defined $tech){
+		$path = "/endpoints/%s";
+	}
+	else{
+		$path = '/endpoints';
+	}
+
 	my $response = $self->{'api'}->call({
-		'path' => '/endpoints',
-		'http_method' => 'GET'
+		'path' => $path,
+		'http_method' => 'GET',
+		'object_id' => $tech,
 	});
-	# Temporary until method is implemented
-	my $result_list = [
-		AsteriskPl::Endpoint->new('api' => $self->{'api'}),
-		AsteriskPl::Endpoint->new('api' => $self->{'api'}),
-	];
-	#$result_list = [];
-	#foreach my $x (@{$response->{'endpoints'}}) {
-	#	$x->{'api'} = $self->{'api'};
-	#	push @$result_list = AsteriskPl::Endpoint->new('api' => $self{'api'}),
-	#}
-	return $result_list;
+
+	if (!defined $response || !defined $response->{success} || $response->{success} eq 0){
+		return [];
+	}
+
+	my @result_list;
+	foreach my $x (@{$response->{'response'}}) {
+		my $chan = AsteriskPl::Endpoint->new('api' => $self->{'api'}, %{$x});
+		push @result_list, $chan;
+	}
+	return \@result_list;
 }
 
 sub get_channels {
